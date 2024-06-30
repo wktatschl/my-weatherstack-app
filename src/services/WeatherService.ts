@@ -15,7 +15,7 @@ export const fetchWeather = async (city: string): Promise<Weather> => {
 
     const data = response.data;
 
-    if (!data || !data.current || !data.location || !data.request) {
+    if (!data || !data.current || !data.location) {
       throw new Error('Invalid response format');
     }
 
@@ -24,10 +24,10 @@ export const fetchWeather = async (city: string): Promise<Weather> => {
       temperature: data.current.temperature,
       description: data.current.weather_descriptions[0] || 'Weather description not available',
       iconUrl: data.current.weather_icons[0] || '',
-      detailsUrl: data.request.url || '',
+      detailsUrl: '',
     };
   } catch (error) {
-    console.error('Error fetching weather:', error);
+    // console.error('Error fetching weather:', error);
     throw new Error('Failed to fetch weather data');
   }
 };

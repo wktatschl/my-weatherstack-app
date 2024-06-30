@@ -6,7 +6,7 @@
         <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
       </button>
       <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
-        <li v-for="mode in ['light', 'dark', 'auto']" :key="mode">
+        <li v-for="mode in ['light', 'dark']" :key="mode">
           <button
             type="button"
             class="dropdown-item d-flex align-items-center"
@@ -14,13 +14,7 @@
             @click="toggleTheme(mode)"
             :aria-pressed="theme === mode"
           >
-            <svg class="bi me-2 opacity-50" width="1em" height="1em">
-              <use href="#circle-half"></use>
-            </svg>
             {{ mode.charAt(0).toUpperCase() + mode.slice(1) }}
-            <svg v-if="theme === mode" class="bi ms-auto" width="1em" height="1em">
-              <use href="#check2"></use>
-            </svg>
           </button>
         </li>
       </ul>
@@ -36,9 +30,7 @@
         <div class="col-md-8 offset-md-2">
           <div class="input-group search-bar">
             <input v-model="city" type="text" id="cityInput" class="form-control" placeholder="Saisir le nom d'une ville" @keyup.enter="getWeather">
-            <div class="input-group-append">
-              <button class="btn btn-primary" type="button" id="searchButton" @click="getWeather">Rechercher</button>
-            </div>
+            <button class="btn btn-primary" type="button" id="searchButton" @click="getWeather">Rechercher</button>
           </div>
         </div>
       </div>
@@ -92,9 +84,6 @@ export default defineComponent({
 
     const toggleTheme = (selectedTheme: string) => {
     
-        if (selectedTheme === 'auto') {
-            selectedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        }
         theme.value = selectedTheme;
         document.documentElement.setAttribute('data-bs-theme', selectedTheme);
         localStorage.setItem('theme', selectedTheme);
@@ -114,6 +103,10 @@ export default defineComponent({
 
     .weatherCard {
         border: none;
+    }
+
+    #searchButton {
+        border-radius: none;
     }
 
 </style>
